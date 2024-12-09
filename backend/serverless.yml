@@ -4,8 +4,7 @@ service: mochi-golf
 # list of plugins 
 plugins: 
   - serverless-offline 
-  - serverless-dynamodb-local
-  - serverless-esbuild  # For TypeScript compilation
+  # - serverless-dynamodb-local
 
 # configuration 
 provider: 
@@ -26,25 +25,25 @@ provider:
     Environment: ${self:provider.stage}
     Project: ${self:service}
   memorySize: 256
-  timeout: 30
+  timeout: 29
 
   # Environment variables available to all functions
-  environment:
-    USER_TABLE: ${self:service}-${self:provider.stage}-users
-    PRACTICE_TABLE: ${self:service}-${self:provider.stage}-practices
+  # environment:
+  #   USER_TABLE: ${self:service}-${self:provider.stage}-users
+  #   PRACTICE_TABLE: ${self:service}-${self:provider.stage}-practices
     
   # IAM permissions for Lambda functions
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - dynamodb:PutItem
-            - dynamodb:GetItem
-            - dynamodb:Query
-          Resource: 
-            - !GetAtt UserTable.Arn
-            - !GetAtt PracticeTable.Arn
+  # iam:
+  #   role:
+  #     statements:
+  #       - Effect: Allow
+  #         Action:
+  #           - dynamodb:PutItem
+  #           - dynamodb:GetItem
+  #           - dynamodb:Query
+  #         Resource: 
+  #           - !GetAtt UserTable.Arn
+  #           - !GetAtt PracticeTable.Arn
 
 # TypeScript build configuration
 custom:
@@ -58,70 +57,75 @@ custom:
 
 # Lambda functions 
 functions:
-  createPractice:
-    handler: src/handlers/practice/create.handler
-    events:
-      - http:
-          path: practice
-          method: post
-          cors: true
-          response:
-            headers:
-              Content-Type: "'application/json'"
+  # createPractice:
+  #   handler: src/handlers/practice/create.handler
+  #   events:
+  #     - http:
+  #         path: practice
+  #         method: post
+  #         cors: true
+  #         response:
+  #           headers:
+  #             Content-Type: "'application/json'"
 
   hello:
-    handler: src/handlers/test/
+    handler: src/handlers/test/hello.handler
+    events:
+      - http:
+          path: test/hello
+          method: get
+          cors: true
 
 # resources - DynamoDB tables 
-resources:
-  Resources:
-    UserTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:provider.environment.USER_TABLE}
-        AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-          - AttributeName: username
-            AttributeType: S
-        KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
-        GlobalSecondaryIndexes:
-          - IndexName: usernameIndex
-            KeySchema:
-              - AttributeName: username
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
-        BillingMode: PAY_PER_REQUEST
-        PointInTimeRecoverySpecification:
-          PointInTimeRecoveryEnabled: true
-    PracticeTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:provider.environment.PRACTICE_TABLE}
-        AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-          - AttributeName: practiceId
-            AttributeType: S
-          - AttributeName: date
-            AttributeType: S
-        KeySchema:
-          - AttributeName: userId
-            KeyType: HASH              # Partition key
-          - AttributeName: practiceId
-            KeyType: RANGE             # Sort key
-        GlobalSecondaryIndexes:
-          - IndexName: dateIndex
-            KeySchema:
-              - AttributeName: userId
-                KeyType: HASH
-              - AttributeName: date
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL
-        BillingMode: PAY_PER_REQUEST
-        PointInTimeRecoverySpecification:
-          PointInTimeRecoveryEnabled: true
+# resources:
+#   Resources:
+#     UserTable:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         TableName: ${self:provider.environment.USER_TABLE}
+#         AttributeDefinitions:
+#           - AttributeName: userId
+#             AttributeType: S
+#           - AttributeName: username
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: userId
+#             KeyType: HASH
+#         GlobalSecondaryIndexes:
+#           - IndexName: usernameIndex
+#             KeySchema:
+#               - AttributeName: username
+#                 KeyType: HASH
+#             Projection:
+#               ProjectionType: ALL
+#         BillingMode: PAY_PER_REQUEST
+#         PointInTimeRecoverySpecification:
+#           PointInTimeRecoveryEnabled: true
+#     PracticeTable:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         TableName: ${self:provider.environment.PRACTICE_TABLE}
+#         AttributeDefinitions:
+#           - AttributeName: userId
+#             AttributeType: S
+#           - AttributeName: practiceId
+#             AttributeType: S
+#           - AttributeName: date
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: userId
+#             KeyType: HASH              # Partition key
+#           - AttributeName: practiceId
+#             KeyType: RANGE             # Sort key
+#         GlobalSecondaryIndexes:
+#           - IndexName: dateIndex
+#             KeySchema:
+#               - AttributeName: userId
+#                 KeyType: HASH
+#               - AttributeName: date
+#                 KeyType: RANGE
+#             Projection:
+#               ProjectionType: ALL
+#         BillingMode: PAY_PER_REQUEST
+#         PointInTimeRecoverySpecification:
+#           PointInTimeRecoveryEnabled: true
