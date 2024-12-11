@@ -1,0 +1,15 @@
+# environment variables
+.env
+.env.*
+
+# logs
+*.log
+
+.DS_Store
+
+# Serverless directories
+.serverless
+.serverless/*
+
+# dependency directories
+node_modules
