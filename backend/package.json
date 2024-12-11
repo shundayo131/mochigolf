@@ -4,8 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "serverless deploy",
+    "dev": "serverless offline",
+    "deploy:prod": "serverless deploy --stage prod"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.146",
+    "@types/node": "^22.10.1",
+    "@types/uuid": "^10.0.0",
+    "esbuild": "^0.24.0",
+    "serverless": "^4.4.14",
+    "serverless-offline": "^14.3.4",
+    "serverless-typescript": "^0.0.5",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.705.0",
+    "@aws-sdk/lib-dynamodb": "^3.705.0",
+    "uuid": "^11.0.3"
+  }
 }
