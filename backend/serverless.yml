@@ -75,6 +75,14 @@ functions:
             headers:
               Content-Type: "'application/json'"
 
+  getPractice:
+    handler: src/handlers/practice/get.handler
+    events:
+      - http:
+          path: practice
+          method: get
+          cors: true
+
   # hello:
   #   handler: src/handlers/test/hello.handler
   #   events:
