@@ -75,13 +75,13 @@ functions:
             headers:
               Content-Type: "'application/json'"
 
-  # hello:
-  #   handler: src/handlers/test/hello.handler
-  #   events:
-  #     - http:
-  #         path: test/hello
-  #         method: get
-  #         cors: true
+  getPractice:
+    handler: src/handlers/practice/get.handler
+    events:
+      - http:
+          path: practice
+          method: get
+          cors: true
 
 # resources - DynamoDB tables 
 resources:

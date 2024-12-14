@@ -2,29 +2,29 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { DynamoDB } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
-import { v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+import { Practice, CreatePracticeRequest } from '../../types/practice';
 
 const dynamoDB = DynamoDBDocument.from(new DynamoDB());
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  try {    
-    // Check event for debug purpose 
-    console.log('Received event:', JSON.stringify(event));
-
-
-    // Parse request body and get timestamp 
-    const body = JSON.parse(event.body || '{}'); 
+  try {
+    // Parse request body    
+    const requestBody: CreatePracticeRequest = JSON.parse(event.body || '{}'); 
     const timestamp = new Date().toISOString();
 
-    // dummy record data - [TODO] update values 
-    const practice = {
-      userId: '123',
+    // TODO: Later this will come from auth token
+    const userId = 'test123'; // Temporary hardcoded value 
+ 
+    // Create a practice object
+    const practice: Practice = {
+      userId,
       practiceId: uuidv4(),
-      date: '2024-12-10T15:45:00Z',
-      practiceGoal: 'perfect putt',
-      clubsUsed: ["7-Iron", "Putter", "Driver"],
-      ballsHit: 100,
-      notes: 'I did well today',
+      date: requestBody.date,
+      practiceGoal: requestBody.practiceGoal,
+      clubsUsed: requestBody.clubsUsed, 
+      ballsHit: requestBody.ballsHit,
+      notes: requestBody.notes || '',
       createdAt: timestamp,
       updatedAt: timestamp
     };
@@ -51,9 +51,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         practice
       })
     }
-  } catch (error) {
-    console.error('Error: ', error);
 
+  } catch (error) {
+    
+    console.error('Error: ', error);
+    
     return {
       statusCode: 500,
       headers: {

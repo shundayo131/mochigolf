@@ -9,7 +9,7 @@
     "dev": "serverless offline",
     "deploy:prod": "serverless deploy --stage prod"
   },
-  "author": "",
+  "author": "Shun Ito",
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.146",
