@@ -83,14 +83,6 @@ functions:
           method: get
           cors: true
 
-  # hello:
-  #   handler: src/handlers/test/hello.handler
-  #   events:
-  #     - http:
-  #         path: test/hello
-  #         method: get
-  #         cors: true
-
 # resources - DynamoDB tables 
 resources:
   Resources:
