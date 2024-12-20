@@ -1,11 +1,16 @@
 import React from 'react';
-import HomePage from './pages/Homepage';
+import { BrowserRouter } from 'react-router-dom';
+import Layout from './components/layout/Layout';
 
 const App: React.FC = () => {
+  console.log('app');
+
   return (
-    <div className="min-h-screen bg-base-200">
-      <HomePage />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-base-200">
+        <Layout />
+      </div>
+    </BrowserRouter>
   );
 };
 

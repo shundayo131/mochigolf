@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-const placeholderReducer = (state = {}, action: any) => state;
+// Import reducers 
+import counterReducer from '../features/test/counterSlice';
 
 export const store = configureStore({
   reducer: {
-    // Reducer will be added here 
-    placeholder: placeholderReducer, // Add a placeholder reducer
-
-  },
+    // All reducers will be added here 
+    counter: counterReducer,  // Add counterReducer for testign redux
+  },  
 });
 
 export type RootState = ReturnType<typeof store.getState>;
