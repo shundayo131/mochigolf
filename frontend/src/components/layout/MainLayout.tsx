@@ -2,21 +2,23 @@ import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Header from '../common/Header';
 import SideNav from '../common/SideNav';
-import Practice from '../../pages/Practice';
+import PracticeList from '../../pages/PracticeList';
+import PracticeDetail from '../../pages/PracticeDetail';
 import Trend from '../../pages/Trend';
 import Clubs from '../../pages/Clubs';
 import Settings from '../../pages/Settings';
 
 const MainLayout = () => {
-  console.log('MainLayout')
 
   return (
     <div className="flex flex-col h-screen">
+
     {/* Header */}
     <Header />
 
     {/* Body */}
     <div className="flex flex-1">
+      
       {/* SideNav (hidden on small screens, shown on larger screens) */}
       <aside className="hidden md:block md:w-60 bg-base-200">
         <SideNav />
@@ -25,7 +27,8 @@ const MainLayout = () => {
       {/* Main Content */}
       <div className="flex-1 p-4 bg-base-100">
         <Routes>
-          <Route path="/practice" element={<Practice />} />
+          <Route path="/practice" element={<PracticeList />} />
+          <Route path="/practice/:id" element={<PracticeDetail />} />
           <Route path="/trend" element={<Trend />} />
           <Route path="/clubs" element={<Clubs />} />
           <Route path="/settings" element={<Settings />} />
