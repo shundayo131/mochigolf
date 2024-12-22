@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 // Import reducers 
-import counterReducer from '../features/test/counterSlice';
+import practiceReducer from "../features/practice/practiceSlice";
+
 
 export const store = configureStore({
   reducer: {
     // All reducers will be added here 
-    counter: counterReducer,  // Add counterReducer for testign redux
-  },  
+    practices: practiceReducer,
+    
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
